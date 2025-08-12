@@ -1,8 +1,3 @@
-Got it — I’ll fill this **Project Idea Submission Template** for your **React-based Video Subtitle Editor** project in a clear, professional way so it’s ready for GitHub.
-
----
-
-## **Project Idea Submission Template**
 
 **1. Project Title**
 *AI-Powered Video Subtitle Editor*
