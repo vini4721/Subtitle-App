@@ -1,18 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
 import HomeScreen from "./src/screens/HomeScreen";
 import SubtitleEditorScreen from "./src/screens/SubtitleEditorScreen";
 import VideoEditorScreen from "./src/screens/VideoEditorScreen";
 
-export type RootStackParamList = {
-  Home: undefined;
-  VideoEditor: { videoUri: string };
-  SubtitleEditor: { videoUri: string; subtitles: any[] };
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (

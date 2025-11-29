@@ -2,7 +2,7 @@
   "name": "ai-subtitle-editor",
   "version": "1.0.0",
   "description": "AI-Powered Video Subtitle Editor - College Project by Vinayak Singh",
-  "main": "index.ts",
+  "main": "App.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

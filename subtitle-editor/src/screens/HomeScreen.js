@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { StackNavigationProp } from "@react-navigation/stack";
 import * as DocumentPicker from "expo-document-picker";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   SafeAreaView,
@@ -11,15 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { RootStackParamList } from "../../App";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
-
-interface Props {
-  navigation: HomeScreenNavigationProp;
-}
-
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleVideoUpload = async () => {
@@ -134,17 +126,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-interface FeatureItemProps {
-  icon: any;
-  title: string;
-  description: string;
-}
-
-const FeatureItem: React.FC<FeatureItemProps> = ({
-  icon,
-  title,
-  description,
-}) => (
+const FeatureItem = ({ icon, title, description }) => (
   <View style={styles.featureItem}>
     <View style={styles.featureIcon}>
       <Ionicons name={icon} size={24} color="#4C1D95" />

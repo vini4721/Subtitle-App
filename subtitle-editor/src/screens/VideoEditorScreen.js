@@ -21,20 +21,20 @@ type VideoEditorScreenNavigationProp = StackNavigationProp<
 >;
 type VideoEditorScreenRouteProp = RouteProp<RootStackParamList, "VideoEditor">;
 
-interface Props {
-  navigation: VideoEditorScreenNavigationProp;
-  route: VideoEditorScreenRouteProp;
+/* Props:
+  navigation;
+  route;
 }
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const VideoEditorScreen: React.FC<Props> = ({ navigation, route }) => {
+const VideoEditorScreen = ({ navigation, route }) => {
   const { videoUri } = route.params;
-  const videoRef = useRef<Video>(null);
+  const videoRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
+  const [videoInfo, setVideoInfo] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [isGeneratingSubtitles, setIsGeneratingSubtitles] = useState(false);
 
@@ -79,7 +79,7 @@ const VideoEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const handleSeek = async (position: number) => {
+  const handleSeek = async (position) => {
     try {
       if (videoRef.current && videoInfo) {
         const seekPosition = (position / 100) * videoInfo.duration;
@@ -144,7 +144,7 @@ const VideoEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     }, 3000);
   };
 
-  const formatTime = (milliseconds: number): string => {
+  const formatTime = (milliseconds) => {
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;

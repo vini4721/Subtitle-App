@@ -1,8 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { ResizeMode, Video } from "expo-av";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -15,37 +13,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { RootStackParamList } from "../../App";
-import { Subtitle } from "../types";
-
-type SubtitleEditorScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "SubtitleEditor"
->;
-type SubtitleEditorScreenRouteProp = RouteProp<
-  RootStackParamList,
-  "SubtitleEditor"
->;
-
-interface Props {
-  navigation: SubtitleEditorScreenNavigationProp;
-  route: SubtitleEditorScreenRouteProp;
-}
 
 const { width: screenWidth } = Dimensions.get("window");
 
-const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
+const SubtitleEditorScreen = ({ navigation, route }) => {
   const { videoUri, subtitles: initialSubtitles } = route.params;
-  const videoRef = useRef<Video>(null);
+  const videoRef = useRef(null);
 
-  const [subtitles, setSubtitles] = useState<Subtitle[]>(initialSubtitles);
-  const [selectedSubtitle, setSelectedSubtitle] = useState<Subtitle | null>(
-    null
-  );
+  const [subtitles, setSubtitles] = useState(initialSubtitles);
+  const [selectedSubtitle, setSelectedSubtitle] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editingSubtitle, setEditingSubtitle] = useState<Subtitle | null>(null);
+  const [editingSubtitle, setEditingSubtitle] = useState(null);
 
   const handlePlayPause = async () => {
     try {
@@ -62,7 +42,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const handleSubtitleSelect = async (subtitle: Subtitle) => {
+  const handleSubtitleSelect = async (subtitle) => {
     setSelectedSubtitle(subtitle);
     try {
       if (videoRef.current) {
@@ -75,7 +55,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const handleEditSubtitle = (subtitle: Subtitle) => {
+  const handleEditSubtitle = (subtitle) => {
     setEditingSubtitle({ ...subtitle });
     setShowEditModal(true);
   };
@@ -92,7 +72,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const handleDeleteSubtitle = (subtitleId: string) => {
+  const handleDeleteSubtitle = (subtitleId) => {
     Alert.alert(
       "Delete Subtitle",
       "Are you sure you want to delete this subtitle?",
@@ -113,7 +93,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleAddSubtitle = () => {
-    const newSubtitle: Subtitle = {
+    const newSubtitle = {
       id: Date.now().toString(),
       startTime: currentPosition,
       endTime: currentPosition + 3000,
@@ -131,7 +111,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const exportSubtitles = () => {
-    // Simulate export functionality
     const srtContent = generateSRTContent(subtitles);
     Alert.alert(
       "Export Successful",
@@ -143,7 +122,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
-  const generateSRTContent = (subtitles: Subtitle[]): string => {
+  const generateSRTContent = (subtitles) => {
     return subtitles
       .map((subtitle, index) => {
         const startTime = formatSRTTime(subtitle.startTime);
@@ -153,7 +132,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
       .join("\n");
   };
 
-  const formatSRTTime = (milliseconds: number): string => {
+  const formatSRTTime = (milliseconds) => {
     const hours = Math.floor(milliseconds / 3600000);
     const minutes = Math.floor((milliseconds % 3600000) / 60000);
     const seconds = Math.floor((milliseconds % 60000) / 1000);
@@ -165,13 +144,13 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
       .padStart(3, "0")}`;
   };
 
-  const formatTime = (milliseconds: number): string => {
+  const formatTime = (milliseconds) => {
     const minutes = Math.floor(milliseconds / 60000);
     const seconds = Math.floor((milliseconds % 60000) / 1000);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const getCurrentSubtitle = (): Subtitle | null => {
+  const getCurrentSubtitle = () => {
     return (
       subtitles.find(
         (sub) =>
@@ -180,7 +159,7 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
-  const renderSubtitleItem = ({ item }: { item: Subtitle }) => {
+  const renderSubtitleItem = ({ item }) => {
     const isSelected = selectedSubtitle?.id === item.id;
     const isCurrent = getCurrentSubtitle()?.id === item.id;
 
@@ -219,7 +198,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Video Player */}
       <View style={styles.videoContainer}>
         <Video
           ref={videoRef}
@@ -235,7 +213,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
           }}
         />
 
-        {/* Subtitle Overlay */}
         {(() => {
           const currentSubtitle = getCurrentSubtitle();
           return currentSubtitle ? (
@@ -247,7 +224,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
           ) : null;
         })()}
 
-        {/* Video Controls */}
         <View style={styles.videoControls}>
           <TouchableOpacity style={styles.playButton} onPress={handlePlayPause}>
             <Ionicons
@@ -259,7 +235,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
       </View>
 
-      {/* Subtitle List Header */}
       <View style={styles.listHeader}>
         <Text style={styles.listTitle}>Subtitles ({subtitles.length})</Text>
         <View style={styles.headerActions}>
@@ -280,7 +255,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
       </View>
 
-      {/* Subtitle List */}
       <FlatList
         data={subtitles}
         renderItem={renderSubtitleItem}
@@ -289,7 +263,6 @@ const SubtitleEditorScreen: React.FC<Props> = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       />
 
-      {/* Edit Modal */}
       <Modal
         visible={showEditModal}
         animationType="slide"
