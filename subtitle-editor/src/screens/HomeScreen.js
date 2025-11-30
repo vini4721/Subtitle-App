@@ -54,8 +54,17 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header Section */}
         <View style={styles.header}>
-          <View style={styles.logoContainer}>
-            <Ionicons name="videocam" size={60} color="#4C1D95" />
+          <View style={styles.headerTop}>
+            <View style={styles.logoContainer}>
+              <Ionicons name="videocam" size={60} color="#4C1D95" />
+            </View>
+            <TouchableOpacity
+              style={styles.projectsButton}
+              onPress={() => navigation.navigate("Projects")}
+            >
+              <Ionicons name="folder-outline" size={24} color="#4C1D95" />
+              <Text style={styles.projectsButtonText}>My Projects</Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.title}>AI Subtitle Editor</Text>
           <Text style={styles.subtitle}>
@@ -149,7 +158,27 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    paddingVertical: 40,
+    marginBottom: 32,
+  },
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 16,
+  },
+  projectsButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 8,
+    backgroundColor: "#F5F3FF",
+    borderRadius: 8,
+    gap: 4,
+  },
+  projectsButtonText: {
+    color: "#4C1D95",
+    fontSize: 14,
+    fontWeight: "600",
   },
   logoContainer: {
     width: 100,
@@ -158,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: 16,
   },
   title: {
     fontSize: 28,

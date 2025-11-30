@@ -1,8 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { ResizeMode, Video } from "expo-av";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -12,19 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { RootStackParamList } from "../../App";
-import { VideoInfo } from "../types";
-
-type VideoEditorScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "VideoEditor"
->;
-type VideoEditorScreenRouteProp = RouteProp<RootStackParamList, "VideoEditor">;
-
-/* Props:
-  navigation;
-  route;
-}
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -107,7 +92,7 @@ const VideoEditorScreen = ({ navigation, route }) => {
             fontSize: 16,
             color: "#FFFFFF",
             backgroundColor: "rgba(0,0,0,0.8)",
-            fontWeight: "normal" as const,
+            fontWeight: "normal",
           },
         },
         {
@@ -119,7 +104,7 @@ const VideoEditorScreen = ({ navigation, route }) => {
             fontSize: 16,
             color: "#FFFFFF",
             backgroundColor: "rgba(0,0,0,0.8)",
-            fontWeight: "normal" as const,
+            fontWeight: "normal",
           },
         },
         {
@@ -131,7 +116,7 @@ const VideoEditorScreen = ({ navigation, route }) => {
             fontSize: 16,
             color: "#FFFFFF",
             backgroundColor: "rgba(0,0,0,0.8)",
-            fontWeight: "normal" as const,
+            fontWeight: "normal",
           },
         },
       ];

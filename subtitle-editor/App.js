@@ -1,13 +1,40 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { registerRootComponent } from "expo";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import "react-native-url-polyfill/auto";
+import AuthScreen from "./src/screens/AuthScreen";
 import HomeScreen from "./src/screens/HomeScreen";
-import SubtitleEditorScreen from "./src/screens/SubtitleEditorScreen";
+import ProjectsScreen from "./src/screens/ProjectsScreen";
+import SubtitleEditorScreenEnhanced from "./src/screens/SubtitleEditorScreenEnhanced";
 import VideoEditorScreen from "./src/screens/VideoEditorScreen";
+import FirebaseService from "./src/services/FirebaseService";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function App() {
+  const [initializing, setInitializing] = useState(true);
+
+  useEffect(() => {
+    // Initialize Firebase and other services
+    const initializeApp = async () => {
+      try {
+        await FirebaseService.initialize();
+      } catch (error) {
+        console.error("Initialization error:", error);
+      } finally {
+        setInitializing(false);
+      }
+    };
+
+    initializeApp();
+  }, []);
+
+  if (initializing) {
+    return null; // Or a loading screen
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -23,6 +50,11 @@ export default function App() {
         }}
       >
         <Stack.Screen
+          name="Auth"
+          component={AuthScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{ title: "AI Subtitle Editor" }}
@@ -34,11 +66,21 @@ export default function App() {
         />
         <Stack.Screen
           name="SubtitleEditor"
-          component={SubtitleEditorScreen}
+          component={SubtitleEditorScreenEnhanced}
           options={{ title: "Edit Subtitles" }}
+        />
+        <Stack.Screen
+          name="Projects"
+          component={ProjectsScreen}
+          options={{ title: "My Projects" }}
         />
       </Stack.Navigator>
       <StatusBar style="light" />
     </NavigationContainer>
   );
 }
+
+// Register the main component
+registerRootComponent(App);
+
+export default App;
